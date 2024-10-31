@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour {
     
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private InputAction playerMovement;
+    
     // [SerializeField] private InputAction playerAttack;
     // [SerializeField] private InputAction playerInteract;
 
