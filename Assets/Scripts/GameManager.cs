@@ -9,11 +9,12 @@ public class GameManager : MonoBehaviour {
     #endregion
     public static GameManager Instance { get; private set; } 
     public UIDocument UIDoc;
+    
     private int       m_FoodAmount = 100; 
     private Label     m_FoodLabel; // Label (Unity UI (UnityDoc))
     
-    [SerializeField] private BoardManager     BoardManager;
-    [SerializeField] private PlayerController PlayerController;
+    [SerializeField] private BoardManager     boardManager;
+    [SerializeField] private PlayerController playerController;
     
     #region TurnManager Public 
     /* If TurnManager of GameManager public,
@@ -35,8 +36,8 @@ public class GameManager : MonoBehaviour {
         m_FoodLabel.text = "Food : " + m_FoodAmount;
     }
     private void InitializeGame() {
-        BoardManager.Init();
-        PlayerController.Spawn(BoardManager, new Vector2Int(1, 1));
+        boardManager.Init();
+        playerController.Spawn(boardManager, new Vector2Int(1, 1));
     }
     private void InitializeUI() {
         #region .rootVisualElement - Q Method > Info
