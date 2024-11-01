@@ -5,8 +5,8 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour {
     private BoardManager m_Board;
     private Vector2Int   m_CellPosition;
-    private bool         isMoving = false;
-    private Vector2Int   targetCellPosition;
+    private bool         m_isMoving = false;
+    private Vector2Int   m_targetCellPosition;
     
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private InputAction playerMovement;
@@ -58,8 +58,8 @@ public class PlayerController : MonoBehaviour {
         BoardManager.CellData cellData = m_Board.GetCellData(newCellTarget);
         
         if (cellData != null && cellData.Passable) {
-            isMoving = true;
-            targetCellPosition = newCellTarget;
+            m_isMoving = true;
+            m_targetCellPosition = newCellTarget;
             GameManager.Instance.TurnManager.Tick();
         }
     }
@@ -69,19 +69,19 @@ public class PlayerController : MonoBehaviour {
      * then Stops movement upon reaching the Target cell. Change float value for Lerp accuracy*/
     #endregion
     private void MovePlayer() {
-        Vector3 targetCell = m_Board.CellToWorld(targetCellPosition);
+        Vector3 targetCell = m_Board.CellToWorld(m_targetCellPosition);
         transform.position = Vector3.Lerp(transform.position, targetCell, Time.deltaTime * moveSpeed);
 
         if (Vector3.Distance(transform.position, targetCell) < 0.01f) {
-            isMoving = false;
-            m_CellPosition = targetCellPosition;
+            m_isMoving = false;
+            m_CellPosition = m_targetCellPosition;
         }
     }
     private void Update() {
-        if (!isMoving) {
+        if (!m_isMoving) {
             HandleMovementInput();
         }
-        if (isMoving) {
+        if (m_isMoving) {
             MovePlayer();
         }
     }
