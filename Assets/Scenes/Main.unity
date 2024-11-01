@@ -446,6 +446,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 66d2f3340996d824ca20b0eb24aba5c1, type: 2}
   - {fileID: 11400000, guid: cb3a4b614fd02b341a54cd7b2bd5230f, type: 2}
   FoodPrefab: {fileID: 5295506298679307928, guid: 67a6b7acc3325084e967f058de32c2a2, type: 3}
+  FoodCount: 5
 --- !u!156049354 &941536298
 Grid:
   m_ObjectHideFlags: 0
@@ -697,7 +698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fd54a778a95de34fb5a5150884b03c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 12
+  moveSpeed: 15
   playerMovement:
     m_Name: Player Movement
     m_Type: 0
@@ -776,9 +777,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e67f980538f8c544a5b1797e9b00d28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIDoc: {fileID: 878946891}
   BoardManager: {fileID: 941536297}
   PlayerController: {fileID: 1931369081}
-  UIDoc: {fileID: 878946891}
 --- !u!4 &1998631002
 Transform:
   m_ObjectHideFlags: 0

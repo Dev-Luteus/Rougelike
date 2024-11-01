@@ -5,14 +5,14 @@ using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 public class BoardManager : MonoBehaviour {
     public PlayerController Player;
-        
+    
     [SerializeField] private int        Width;
     [SerializeField] private int        Height;
     [SerializeField] private Tile[]     GroundTiles;
     [SerializeField] private Tile[]     WallTiles;
     [SerializeField] private GameObject FoodPrefab;
     [SerializeField] private int        FoodCount = 1; // amount of FoodPrefabs
-
+    
     #region CellData > Info
     /* This class is supposed to hold Extra information about each cell in the grid
      * Currently, each cell has a X and Y position in the grid, but now they can have a Bool,
@@ -44,7 +44,7 @@ public class BoardManager : MonoBehaviour {
     #endregion
     public Vector3 CellToWorld(Vector2Int cellIndex) => 
         m_Grid.GetCellCenterWorld((Vector3Int)cellIndex);
-
+    
     #region CellData/GetCellData > Info
     /* Check Cell coordinate in the Array, Return Null if player is moving into a WALL,
      * Also making sure the player movement stays inside of the defined space. Basically,
@@ -68,7 +68,7 @@ public class BoardManager : MonoBehaviour {
     private bool IsWithinBounds(Vector2Int cellIndex) =>
         cellIndex.x >= 0 && cellIndex.x < Width && 
         cellIndex.y >= 0 && cellIndex.y < Height;
-
+    
     void GenerateFood() {
         for (int i = 0; i < FoodCount; i++) {
             // After List is generated, pick random Cell from the generated List of Cells

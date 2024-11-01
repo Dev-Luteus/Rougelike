@@ -4,9 +4,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour {
     private BoardManager m_Board;
-    private Vector2Int m_CellPosition;
-    private bool isMoving = false;
-    private Vector2Int targetCellPosition;
+    private Vector2Int   m_CellPosition;
+    private bool         isMoving = false;
+    private Vector2Int   targetCellPosition;
     
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private InputAction playerMovement;

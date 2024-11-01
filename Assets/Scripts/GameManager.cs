@@ -1,21 +1,24 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 public class GameManager : MonoBehaviour {
-    public static GameManager Instance { get; private set; } 
+    #region Public Static Instance > Info
     /* Public Static Instance, Singleton Pattern, One instance per class,
      * but can be accessed everywhere. Bad for Multi-threading,
      * but for this simple game it gives much simpler code.
      * not private static, because it can't be accessed without serialize? */
+    #endregion
+    public static GameManager Instance { get; private set; } 
+    public UIDocument UIDoc;
+    private int       m_FoodAmount = 100; 
+    private Label     m_FoodLabel; // Label (Unity UI (UnityDoc))
     
     [SerializeField] private BoardManager     BoardManager;
     [SerializeField] private PlayerController PlayerController;
     
-    public UIDocument UIDoc;
-    private int m_FoodAmount = 100; 
-    private Label m_FoodLabel; // Label (Unity UI (UnityDoc))
-    
+    #region TurnManager Public 
     /* If TurnManager of GameManager public,
      * other scripts will also be able to access it through GameManager.Instance .*/
+    #endregion
     public TurnManager TurnManager { get; private set;}
     private void Awake() {
         if (Instance != null) {
@@ -36,8 +39,11 @@ public class GameManager : MonoBehaviour {
         PlayerController.Spawn(BoardManager, new Vector2Int(1, 1));
     }
     private void InitializeUI() {
-        // .rootVisualElement = GameUI or UXML file. Its the first element in the hierarchy, necessary.
-        // Q method looks for: element of given type, f.e label
+        #region .rootVisualElement - Q Method > Info
+        /* .rootVisualElement = GameUI or UXML file.
+         * Its the first element in the hierarchy, necessary.
+         * Q method looks for: element of given type, f.e label */
+        #endregion
         m_FoodLabel = UIDoc.rootVisualElement.Q<Label>("FoodLabel");
         UpdateFoodDisplay();
     }
