@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 public class GameManager : MonoBehaviour {
@@ -30,10 +31,10 @@ public class GameManager : MonoBehaviour {
     }
     private void Start() {
         TurnManager = new TurnManager();
+        TurnManager.OnTick += OnTurnHappen;  // Subscribe OnTurnHappen to OnTick : In order to Update label
         InitializeGame();
         InitializeUI();
-        m_FoodLabel = UIDoc.rootVisualElement.Q<Label>("FoodLabel");
-        m_FoodLabel.text = "Food : " + m_FoodAmount;
+        UpdateFoodDisplay(); // Must be Initialised once ( this is bad code, should fix )
     }
     private void InitializeGame() {
         boardManager.Init();
@@ -46,14 +47,18 @@ public class GameManager : MonoBehaviour {
          * Q method looks for: element of given type, f.e label */
         #endregion
         m_FoodLabel = UIDoc.rootVisualElement.Q<Label>("FoodLabel");
-        UpdateFoodDisplay();
-    }
-    private void UpdateFoodDisplay() {
-        m_FoodLabel.text = $"Food: {m_FoodAmount}";
     }
     private void OnTurnHappen() {
         m_FoodAmount -= 1;
-        m_FoodLabel.text = "Food : "+ m_FoodAmount;
+        UpdateFoodDisplay();
         Debug.Log("Current amount of food : " + m_FoodAmount);
+    }
+    #region UpdateFoodDisplay > LAMBDA ALTERNATIVE
+    /* Lambda Expression Alternative
+    private System.Action<int> UpdateFoodDisplay => (food) => m_FoodLabel.text = $"Food: {food}";
+    */
+    #endregion
+    private void UpdateFoodDisplay() {
+        m_FoodLabel.text = $"Food: {m_FoodAmount}";
     }
 }
