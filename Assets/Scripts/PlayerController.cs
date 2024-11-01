@@ -21,41 +21,68 @@ public class PlayerController : MonoBehaviour {
         m_CellPosition = cell;
         transform.position = m_Board.CellToWorld(cell);
     }
-    void Update() {
+
+    #region HandleMovementInput > Info
+    /* I want this method to interpret Input and Determine Target Cell.
+     * If no movement is made : Do nothing.
+     * TryMove in the Determined Direction (Check Next Region) */
+    #endregion
+    private void HandleMovementInput() {
         Vector2 moveInput = playerMovement.ReadValue<Vector2>();
-
-        if (!isMoving && moveInput != Vector2.zero) {
-            Vector2Int newCellTarget = m_CellPosition;
-
-            if (moveInput.y > 0) {
-                newCellTarget.y += 1;
-            }
-            else if (moveInput.y < 0) {
-                newCellTarget.y -= 1;
-            }
-            else if (moveInput.x > 0) {
-                newCellTarget.x += 1;
-            }
-            else if (moveInput.x < 0) {
-                newCellTarget.x -= 1;
-            }
-
-            BoardManager.CellData cellData = m_Board.GetCellData(newCellTarget);
-            if (cellData != null && cellData.Passable) {
-                isMoving = true;
-                GameManager.Instance.TurnManager.Tick();
-                targetCellPosition = newCellTarget;
-            }
+        if (moveInput == Vector2.zero) return;
+        
+        Vector2Int movementDirection = MovementDirection(moveInput);
+        TryMove(movementDirection);
+    }
+    #region MovementDirection > Info
+    /* I want this method to interpret and return the desired Input Direction
+     * Axis of larger magnitude = Return Value
+     * So if we're 30 degrees larger on one axis, default to that axis.
+     * Unity's new input system SHOULD do this by default however..*/
+    #endregion
+    private Vector2Int MovementDirection(Vector2 moveInput) 
+    {
+        if (Mathf.Abs(moveInput.x) > Mathf.Abs(moveInput.y)) {
+            return moveInput.x > 0 ? Vector2Int.right : Vector2Int.left;
+        } else {
+            return moveInput.y > 0 ? Vector2Int.up : Vector2Int.down;
         }
+    }
+    #region TryMove > Info
+    /* I want this method to try and move the player in the desired direction.
+     * It calculates a New potential cell, checks if cell is valid and Passable,
+     * Starts the Movement, and ticks the Turn. */
+    #endregion
+    private void TryMove(Vector2Int direction) {
+        Vector2Int newCellTarget = m_CellPosition + direction;
+        BoardManager.CellData cellData = m_Board.GetCellData(newCellTarget);
+        
+        if (cellData != null && cellData.Passable) {
+            isMoving = true;
+            targetCellPosition = newCellTarget;
+            GameManager.Instance.TurnManager.Tick();
+        }
+    }
+    #region MovePlayer > Info
+    /* I want this method to actually Move the player by changing its Transform.Position.
+     * It Moves the players position over multiple frames using a Vector3.Lerp,
+     * then Stops movement upon reaching the Target cell. Change float value for Lerp accuracy*/
+    #endregion
+    private void MovePlayer() {
+        Vector3 targetCell = m_Board.CellToWorld(targetCellPosition);
+        transform.position = Vector3.Lerp(transform.position, targetCell, Time.deltaTime * moveSpeed);
 
+        if (Vector3.Distance(transform.position, targetCell) < 0.01f) {
+            isMoving = false;
+            m_CellPosition = targetCellPosition;
+        }
+    }
+    private void Update() {
+        if (!isMoving) {
+            HandleMovementInput();
+        }
         if (isMoving) {
-            // Move the player towards the target cell position over multiple frames
-            transform.position = Vector3.Lerp(transform.position, m_Board.CellToWorld(targetCellPosition), Time.deltaTime * moveSpeed);
-
-            if (Vector3.Distance(transform.position, m_Board.CellToWorld(targetCellPosition)) < 0.01f) {
-                isMoving = false;
-                m_CellPosition = targetCellPosition;
-            }
+            MovePlayer();
         }
     }
 }
