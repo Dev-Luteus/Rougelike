@@ -422,31 +422,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1931369081}
-  Width: 16
-  Height: 8
-  GroundTiles:
+  gridWidth: 16
+  gridHeight: 8
+  groundTiles:
   - {fileID: 11400000, guid: 317bd9f7e7b702741b07740936d229ce, type: 2}
-  - {fileID: 11400000, guid: 47d5d415dacf248469bc366ba64dca15, type: 2}
-  - {fileID: 11400000, guid: c19496420130ea1488ac080af0490312, type: 2}
-  - {fileID: 11400000, guid: 7e28b16019be22040ab5847e4742865e, type: 2}
-  - {fileID: 11400000, guid: 5e1dde769e664f2439261df6656aa922, type: 2}
-  - {fileID: 11400000, guid: 5e6b9ad570fb03a4eb5df16a6bbd703a, type: 2}
-  - {fileID: 11400000, guid: b525bd30b1413194b97214331078254b, type: 2}
-  - {fileID: 11400000, guid: 775589bc01d456041900bda432e570db, type: 2}
-  WallTiles:
-  - {fileID: 11400000, guid: e57e96dd5e3bb8349a4aabbbdabff39c, type: 2}
-  - {fileID: 11400000, guid: 9f9a9d2650462c7448bb450a7f3ca94c, type: 2}
-  - {fileID: 11400000, guid: f93e2e48571530b42abe7012b3bf651b, type: 2}
-  - {fileID: 11400000, guid: 25a81d89e484fa84e853f9081bf6cd96, type: 2}
-  - {fileID: 11400000, guid: d733b9ce7b81b9c48bf22d00d3b7274c, type: 2}
-  - {fileID: 11400000, guid: 6affe47099eac4a4b8999b68523122a9, type: 2}
-  - {fileID: 11400000, guid: cb3a4b614fd02b341a54cd7b2bd5230f, type: 2}
-  - {fileID: 11400000, guid: a5005148f6e89834194c915552682b2a, type: 2}
-  - {fileID: 11400000, guid: 540e01dee7d052b438db99ab7cc12d37, type: 2}
-  - {fileID: 11400000, guid: 66d2f3340996d824ca20b0eb24aba5c1, type: 2}
-  - {fileID: 11400000, guid: cb3a4b614fd02b341a54cd7b2bd5230f, type: 2}
-  FoodPrefab: {fileID: 5295506298679307928, guid: 67a6b7acc3325084e967f058de32c2a2, type: 3}
-  FoodCount: 5
+  wallTiles:
+  - {fileID: 11400000, guid: c70a5f6af8d031647ad4dcc996db27bf, type: 2}
+  foodPrefab: {fileID: 5295506298679307928, guid: 67a6b7acc3325084e967f058de32c2a2, type: 3}
+  foodCount: 5
 --- !u!156049354 &941536298
 Grid:
   m_ObjectHideFlags: 0
@@ -778,8 +761,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIDoc: {fileID: 878946891}
-  BoardManager: {fileID: 941536297}
-  PlayerController: {fileID: 1931369081}
+  boardManager: {fileID: 941536297}
+  playerController: {fileID: 1931369081}
 --- !u!4 &1998631002
 Transform:
   m_ObjectHideFlags: 0
