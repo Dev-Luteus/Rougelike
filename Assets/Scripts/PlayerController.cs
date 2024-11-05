@@ -3,10 +3,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour {
-    private BoardManager m_Board;
-    private Vector2Int   m_CellPosition;
-    private bool         m_isMoving = false;
-    private Vector2Int   m_targetCellPosition;
+    private BoardManager _board;
+    private Vector2Int   _cellPosition;
+    private bool         _isMoving = false;
+    private Vector2Int   _targetCellPosition;
     
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private InputAction playerMovement;
@@ -16,10 +16,11 @@ public class PlayerController : MonoBehaviour {
 
     private void OnEnable() => playerMovement.Enable();
     private void OnDisable() => playerMovement.Disable();
-    public void Spawn(BoardManager boardManager, Vector2Int cell) {
-        m_Board = boardManager;
-        m_CellPosition = cell;
-        transform.position = m_Board.CellToWorld(cell);
+    public void Spawn(BoardManager boardManager, Vector2Int cell) 
+    {
+        _board = boardManager;
+        _cellPosition = cell;
+        transform.position = _board.CellToWorld(cell);
     }
 
     #region HandleMovementInput > Info
@@ -27,7 +28,8 @@ public class PlayerController : MonoBehaviour {
      * If no movement is made : Do nothing.
      * TryMove in the Determined Direction (Check Next Region) */
     #endregion
-    private void HandleMovementInput() {
+    private void HandleMovementInput() 
+    {
         Vector2 moveInput = playerMovement.ReadValue<Vector2>();
         if (moveInput == Vector2.zero) return;
         
@@ -44,7 +46,9 @@ public class PlayerController : MonoBehaviour {
     {
         if (Mathf.Abs(moveInput.x) > Mathf.Abs(moveInput.y)) {
             return moveInput.x > 0 ? Vector2Int.right : Vector2Int.left;
-        } else {
+        } 
+        else 
+        {
             return moveInput.y > 0 ? Vector2Int.up : Vector2Int.down;
         }
     }
@@ -53,13 +57,14 @@ public class PlayerController : MonoBehaviour {
      * It calculates a New potential cell, checks if cell is valid and Passable,
      * Starts the Movement, and ticks the Turn. */
     #endregion
-    private void TryMove(Vector2Int direction) {
-        Vector2Int newCellTarget = m_CellPosition + direction;
-        BoardManager.CellData cellData = m_Board.GetCellData(newCellTarget);
+    private void TryMove(Vector2Int direction) 
+    {
+        Vector2Int newCellTarget = _cellPosition + direction;
+        CellData cellData = _board.GetCellData(newCellTarget);
         
         if (cellData != null && cellData.Passable) {
-            m_isMoving = true;
-            m_targetCellPosition = newCellTarget;
+            _isMoving = true;
+            _targetCellPosition = newCellTarget;
             GameManager.Instance.TurnManager.Tick();
         }
     }
@@ -68,20 +73,25 @@ public class PlayerController : MonoBehaviour {
      * It Moves the players position over multiple frames using a Vector3.Lerp,
      * then Stops movement upon reaching the Target cell. Change float value for Lerp accuracy*/
     #endregion
-    private void MovePlayer() {
-        Vector3 targetCell = m_Board.CellToWorld(m_targetCellPosition);
+    private void MovePlayer() 
+    {
+        Vector3 targetCell = _board.CellToWorld(_targetCellPosition);
         transform.position = Vector3.Lerp(transform.position, targetCell, Time.deltaTime * moveSpeed);
 
-        if (Vector3.Distance(transform.position, targetCell) < 0.01f) {
-            m_isMoving = false;
-            m_CellPosition = m_targetCellPosition;
+        if (Vector3.Distance(transform.position, targetCell) < 0.01f) 
+        {
+            _isMoving = false;
+            _cellPosition = _targetCellPosition;
         }
     }
-    private void Update() {
-        if (!m_isMoving) {
+    private void Update() 
+    {
+        if (!_isMoving) 
+        {
             HandleMovementInput();
         }
-        if (m_isMoving) {
+        if (_isMoving) 
+        {
             MovePlayer();
         }
     }

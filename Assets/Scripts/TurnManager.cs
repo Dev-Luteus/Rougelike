@@ -1,5 +1,6 @@
 using UnityEngine;
-public class TurnManager { 
+public class TurnManager 
+{ 
     #region Callback System OnTick > Info
     /* A callback system allows any part of the code to give a method,
      * that can be called when an event happens. In this case, when a turn happens,
@@ -7,11 +8,13 @@ public class TurnManager {
      * will be called.*/
     #endregion
     public event System.Action OnTick;
-    private int m_TurnCount;
-    public TurnManager() { 
-        m_TurnCount = 1;
+    private int _turnCount;
+    public TurnManager() 
+    { 
+        _turnCount = 1;
     }
-    public void Tick() {
+    public void Tick() 
+    {
         #region OnTick Invoke > Info
         /* Invoke is method in System.Action calls (“invoke”) all the callback methods,
          * that were registered to the OnTick event.
@@ -24,7 +27,7 @@ public class TurnManager {
            } */
         #endregion
         OnTick?.Invoke();
-        m_TurnCount += 1;
-        Debug.Log("Current turn count : " + m_TurnCount);
+        _turnCount += 1;
+        Debug.Log("Current turn count : " + _turnCount);
     }
 }
