@@ -56,7 +56,7 @@ public class BoardManager : MonoBehaviour
      * But is more Reusable: */
     #endregion
     public CellData GetCellData(Vector2Int cellIndex) =>
-    IsWithinBounds(cellIndex) ? _boardData[cellIndex.x, cellIndex.y] : null;
+        IsWithinBounds(cellIndex) ? _boardData[cellIndex.x, cellIndex.y] : null;
 
     private bool IsWithinBounds(Vector2Int cellIndex) =>
         cellIndex.x >= 0 && cellIndex.x < gridWidth && 
