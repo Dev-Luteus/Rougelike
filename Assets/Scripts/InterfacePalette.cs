@@ -3,8 +3,8 @@ using UnityEngine;
 /* Create an instance of MyClass >
  * > Then pass in myClass (object) as parameter, of type IMyInterface:  TestInterface<my IMyInterface>(myClass)
  * TestInterface(myClass) uses: myInterface.TestFunction() >
- * > Which calls void TestFunction(); in interface IMyInterface
- */
+ * > Which calls void TestFunction(); in interface IMyInterface */
+
 public class InterfacePalette
 {
     private void Start()

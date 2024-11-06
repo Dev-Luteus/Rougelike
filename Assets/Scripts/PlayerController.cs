@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private InputAction playerMovement;
     
+    // MyClass myClass = new();
+    // TestInterface(myClass);
+    
     // [SerializeField] private InputAction playerAttack;
     // [SerializeField] private InputAction playerInteract;
 
@@ -66,7 +69,12 @@ public class PlayerController : MonoBehaviour {
             _isMoving = true;
             _targetCellPosition = newCellTarget;
             GameManager.Instance.TurnManager.Tick();
-        }
+            
+            if (cellData.ContainedObject is IInteractable interactable)
+            {
+                interactable.OnEnter();
+            }
+        } 
     }
     #region MovePlayer > Info
     /* I want this method to actually Move the player by changing its Transform.Position.

@@ -62,24 +62,28 @@ public class BoardManager : MonoBehaviour
         cellIndex.x >= 0 && cellIndex.x < gridWidth && 
         cellIndex.y >= 0 && cellIndex.y < gridHeight;
 
-    private void GenerateFood() 
+    private void GenerateFood()
     {
-        for (int i = 0; i < foodCount; i++) 
+        for (int i = 0; i < foodCount; i++)
         {
             // After List is generated, pick random Cell from the generated List of Cells
             int randomIndex = Random.Range(0, _emptyCellsList.Count);
-                
+
             // Int to store Coordinates of Random Cell in List
             Vector2Int cellCoordinate = _emptyCellsList[randomIndex];
-               
+
             // Remove Random Cell from List  :  ( It will now be occupied by a Food object )
             _emptyCellsList.RemoveAt(randomIndex);
-            
-            //Retrieve data from random cell pos (bool, passable)
+
+            // Retrieve data from random cell pos (bool, passable)
             CellData data = _boardData[cellCoordinate.x, cellCoordinate.y];
-            GameObject newFood = Instantiate(foodPrefab);             // Instantiate
-            newFood.transform.position = CellToWorld(cellCoordinate); // Transform position
-            data.ContainedObject = newFood;                           // Update cell to contain new object
+
+            // Create a new Food object and assign it to the CellData
+            Food newFood = new Food();
+            GameObject foodGameObject = Instantiate(foodPrefab);
+            foodGameObject.transform.position = CellToWorld(cellCoordinate);
+            newFood.SetGameObject(foodGameObject);
+            data.ContainedObject = newFood;
         }
     }
     public void Init() 

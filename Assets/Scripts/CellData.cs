@@ -7,5 +7,5 @@ using UnityEngine;
 public class CellData 
 {
     public bool Passable;
-    public GameObject ContainedObject;
+    public Food ContainedObject;
 }
